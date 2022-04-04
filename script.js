@@ -75,19 +75,57 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-let arr = ["a", "b", "c", "d", "e"];
-let arr2 = ["a", "b", "c", "d", "e"];
+// let arr = ["a", "b", "c", "d", "e"];
+// let arr2 = ["a", "b", "c", "d", "e"];
 
-console.log(arr.slice(2));
-console.log(arr.slice(-2));
+// console.log(arr.slice(2));
+// console.log(arr.slice(-2));
 
-console.log(arr.splice(2));
+// console.log(arr.splice(2));
 
-console.log(arr2.reverse());
-console.log(arr2);
+// console.log(arr2.reverse());
+// console.log(arr2);
 
-const letters = arr.concat(arr2);
-console.log(letters);
-console.log([...arr, ...arr2]);
+// const letters = arr.concat(arr2);
+// console.log(letters);
+// console.log([...arr, ...arr2]);
 
-console.log(letters.join(" - "));
+// console.log(letters.join(" - "));
+
+// const arr3 = [23, 11, 64];
+// console.log(arr3.at(0));
+// console.log(arr3[arr3.length - 1]);
+// console.log(arr3.at(-1));
+// console.log("Gerald".at(0));
+
+// array.forEach(element => {});
+
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// for (const movement of movements) {
+//   if (movement > 0) {
+//     console.log(`You deposited ${movement}`);
+//   } else {
+//     console.log(`You withdrew ${Math.abs(movement)}`);
+//   }
+// }
+
+// console.log("---------------");
+
+// movements.forEach(function (movement, index, array) {
+//   if (movement > 0) {
+//     console.log(`You deposited ${index + 1}: ${movement}`);
+//   } else {
+//     console.log(`You withdrew ${index + 1}: ${Math.abs(movement)}`);
+//   }
+// });
+
+// console.log("-----------");
+
+// movements.forEach(movement => {
+//   if (movement > 0) {
+//     console.log(`You deposited ${movement}`);
+//   } else {
+//     console.log(`You withdrew ${Math.abs(movement)}`);
+//   }
+// });
