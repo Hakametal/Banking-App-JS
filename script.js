@@ -77,6 +77,14 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+const displayBalance = function (movements) {
+  const balance = movements.reduce((acc, cur) => acc + cur, 0);
+
+  labelBalance.innerHTML = `€ ${balance}`;
+};
+
+displayBalance(account1.movements);
+
 const createUsername = function (accs) {
   accs.forEach(acc => {
     acc.username = acc.owner
@@ -119,23 +127,37 @@ const movementsDes = movements.map((mov, i) => {
 
 console.log(movementsDes);
 
-// const dogs = {
-//   juliaDogs: [3, 5, 2, 12, 7],
-//   kateDogs: [4, 1, 15, 8, 3],
-// };
+const deposits = movements.filter(mov => mov > 0);
+console.log(deposits);
 
-// const checkDogs = () => {
-//   const copyJulia = dogs.juliaDogs.slice(1, -2);
-//   const allDogs = [...copyJulia, ...dogs.kateDogs];
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
 
-//   allDogs.forEach(function (age, i) {
-//     if (age >= 3) {
-//       console.log(`Dog number ${i + 1} is an adult, and is ${age} years old.`);
-//     } else {
-//       console.log(`Dog number ${i + 1} is a puppy, and is ${age} years old.`);
-//     }
-//   });
-// };
+const balance = movements.reduce((acc, cur) => acc + cur, 0);
+
+console.log(balance);
+
+const dogs = {
+  juliaDogs: [3, 5, 2, 12, 7],
+  kateDogs: [4, 1, 15, 8, 3],
+};
+
+const checkDogs = () => {
+  const copyJulia = dogs.juliaDogs.slice(1, -2);
+  const allDogs = [...copyJulia, ...dogs.kateDogs];
+
+  allDogs.forEach((age, i) => {
+    if (age >= 3) {
+      console.log(`Dog number ${i + 1} is an adult, and is ${age} years old.`);
+    } else {
+      console.log(`Dog number ${i + 1} is a puppy, and is ${age} years old.`);
+    }
+  });
+};
+
+const calAverageHumanAge = function (ages) {};
+
+calAverageHumanAge();
 
 // checkDogs();
 /////////////////////////////////////////////////
