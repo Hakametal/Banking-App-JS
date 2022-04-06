@@ -61,6 +61,35 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = "";
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? "deposit" : "withdrawal";
+    const html = `<div class="movements__row">
+    <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+    
+    <div class="movements__value">${mov}</div>
+  </div>`;
+
+    containerMovements.insertAdjacentHTML("afterbegin", html);
+  });
+};
+
+displayMovements(account1.movements);
+
+const createUsername = function (accs) {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLocaleLowerCase()
+      .split(" ")
+      .map(name => name[0])
+      .join("");
+  });
+};
+
+createUsername(accounts);
+console.log(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -73,6 +102,42 @@ const currencies = new Map([
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
+const eurToUsd = 1.1;
+
+const movementsUsd = movements.map(mov => eurToUsd * mov);
+
+console.log(movements);
+console.log(movementsUsd);
+
+const movementsDes = movements.map((mov, i) => {
+  if (mov > 0) {
+    return `You deposited ${i + 1}: ${mov}`;
+  } else {
+    return `You withdrew ${i + 1}: ${Math.abs(mov)}`;
+  }
+});
+
+console.log(movementsDes);
+
+// const dogs = {
+//   juliaDogs: [3, 5, 2, 12, 7],
+//   kateDogs: [4, 1, 15, 8, 3],
+// };
+
+// const checkDogs = () => {
+//   const copyJulia = dogs.juliaDogs.slice(1, -2);
+//   const allDogs = [...copyJulia, ...dogs.kateDogs];
+
+//   allDogs.forEach(function (age, i) {
+//     if (age >= 3) {
+//       console.log(`Dog number ${i + 1} is an adult, and is ${age} years old.`);
+//     } else {
+//       console.log(`Dog number ${i + 1} is a puppy, and is ${age} years old.`);
+//     }
+//   });
+// };
+
+// checkDogs();
 /////////////////////////////////////////////////
 
 // let arr = ["a", "b", "c", "d", "e"];
@@ -97,8 +162,6 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(arr3[arr3.length - 1]);
 // console.log(arr3.at(-1));
 // console.log("Gerald".at(0));
-
-// array.forEach(element => {});
 
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
