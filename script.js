@@ -155,9 +155,25 @@ const checkDogs = () => {
   });
 };
 
-const calAverageHumanAge = function (ages) {};
+// const julia = [5, 2, 4, 1, 15, 8, 3];
+// const kate = [16, 6, 10, 5, 6, 1, 4];
 
-calAverageHumanAge();
+// const calAverageHumanAge = function (ages) {
+//   const humanAge = ages.map(dogAge => {
+//     if (dogAge <= 2) {
+//       return dogAge * 2;
+//     } else if (dogAge > 2) {
+//       return dogAge + 16 * 4;
+//     }
+//   });
+//   const lessThan18 = humanAge.filter(ages => ages > 18);
+//   const calcAverageAge = humanAge.reduce((acc, ages) => acc + ages, 0);
+//   const averageAge = calcAverageAge / humanAge.length;
+//   console.log(averageAge);
+// };
+
+// calAverageHumanAge(julia);
+// calAverageHumanAge(kate);
 
 // checkDogs();
 /////////////////////////////////////////////////
