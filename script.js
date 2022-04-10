@@ -66,9 +66,21 @@ let currentAccount;
 
 btnLogin.addEventListener("click", param => {
   param.preventDefault();
-  console.log("LOGIN");
 
-  accounts.find(acc => acc.owner === inputLoginUsername);
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    labelWelcome.textContent = `Welcome back ${
+      currentAccount.owner.split(" ")[0]
+    }`;
+    containerApp.style.opacity = 100;
+    displayMovements(currentAccount.movements);
+    displayBalance(currentAccount.movements);
+    calcDisplaySummary(currentAccount.movements);
+  }
 });
 
 const displayMovements = function (movements) {
@@ -84,7 +96,7 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML("afterbegin", html);
   });
 };
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 const displayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur, 0);
@@ -121,7 +133,7 @@ const calcDisplaySummary = movements => {
     .reduce((acc, mov) => acc + mov * 0.015, 0);
   labelSumInterest.textContent = `€${interest}`;
 };
-calcDisplaySummary(account1.movements);
+// calcDisplaySummary(account1.movements);
 
 const currencies = new Map([
   ["USD", "United States dollar"],
