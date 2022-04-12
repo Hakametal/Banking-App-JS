@@ -70,13 +70,15 @@ btnLogin.addEventListener("click", param => {
   currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
   );
-  console.log(currentAccount);
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     labelWelcome.textContent = `Welcome back ${
       currentAccount.owner.split(" ")[0]
     }`;
     containerApp.style.opacity = 100;
+    inputLoginUsername.value = inputLoginPin.value = "";
+    inputLoginPin.blur();
+
     displayMovements(currentAccount.movements);
     displayBalance(currentAccount.movements);
     calcDisplaySummary(currentAccount.movements);
@@ -164,16 +166,10 @@ const movementsDes = movements.map((mov, i) => {
   }
 });
 
-// console.log(movementsDes);
-
 const deposits = movements.filter(mov => mov > 0);
-// console.log(deposits);
-
 const withdrawals = movements.filter(mov => mov < 0);
-// console.log(withdrawals);
 
 const balance = movements.reduce((acc, cur) => acc + cur, 0);
-// console.log(balance);
 
 // const dogs = {
 //   juliaDogs: [3, 5, 2, 12, 7],
