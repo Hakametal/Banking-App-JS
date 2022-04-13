@@ -33,8 +33,6 @@ const account4 = {
   pin: 4444,
 };
 
-const accounts = [account1, account2, account3, account4];
-
 // HTML Elements
 const labelWelcome = document.querySelector(".welcome");
 const labelDate = document.querySelector(".date");
@@ -62,6 +60,8 @@ const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
 //Event Handlers
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const accounts = [account1, account2, account3, account4];
 let currentAccount;
 
 btnLogin.addEventListener("click", param => {
@@ -81,7 +81,7 @@ btnLogin.addEventListener("click", param => {
 
     displayMovements(currentAccount.movements);
     displayBalance(currentAccount.movements);
-    calcDisplaySummary(currentAccount.movements);
+    calcDisplaySummary(currentAccount);
   }
 });
 
@@ -119,31 +119,32 @@ const createUsername = function (accs) {
 createUsername(accounts);
 // console.log(accounts);
 
-const calcDisplaySummary = movements => {
-  const incomes = movements
+const calcDisplaySummary = acc => {
+  const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `€${incomes}`;
 
-  const outgoes = movements
+  const outgoes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `€${Math.abs(outgoes)}`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter(mov => mov > 0)
-    .reduce((acc, mov) => acc + mov * 0.015, 0);
-  labelSumInterest.textContent = `€${interest}`;
+    .map(deposit => (deposit * acc.interestRate) / 100)
+    .filter((int, i, arr) => {
+      return int >= 1;
+    })
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumInterest.textContent = `€${Math.abs(interest)}`;
 };
-// calcDisplaySummary(account1.movements);
 
 const currencies = new Map([
   ["USD", "United States dollar"],
   ["EUR", "Euro"],
   ["GBP", "Pound sterling"],
 ]);
-
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const eurToUsd = 1.1;
 
