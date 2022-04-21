@@ -1,9 +1,5 @@
 "use strict";
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// BANKING APP
-
 // User Data
 const account1 = {
   owner: "Jonas Schmedtmann",
@@ -62,7 +58,16 @@ const inputClosePin = document.querySelector(".form__input--pin");
 //Event Handlers
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 const accounts = [account1, account2, account3, account4];
+const eurToUsd = 1.1;
 let currentAccount;
+
+btnTransfer.addEventListener("click", e => {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+});
 
 btnLogin.addEventListener("click", input => {
   input.preventDefault();
@@ -98,7 +103,6 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML("afterbegin", html);
   });
 };
-// displayMovements(account1.movements);
 
 const displayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur, 0);
@@ -107,7 +111,7 @@ const displayBalance = function (movements) {
 };
 displayBalance(account1.movements);
 
-const createUsername = function (accs) {
+const createUsername = accs => {
   accs.forEach(acc => {
     acc.username = acc.owner
       .toLocaleLowerCase()
@@ -117,7 +121,6 @@ const createUsername = function (accs) {
   });
 };
 createUsername(accounts);
-// console.log(accounts);
 
 const calcDisplaySummary = acc => {
   const incomes = acc.movements
@@ -146,19 +149,12 @@ const currencies = new Map([
   ["GBP", "Pound sterling"],
 ]);
 
-const eurToUsd = 1.1;
-
 const totalDepositsUSD = movements
   .filter(move => move > 0)
   .map(mov => mov * eurToUsd)
   .reduce((acc, mov) => acc + mov, 0);
 
-// console.log(totalDepositsUSD);
 const movementsUsd = movements.map(mov => eurToUsd * mov);
-
-// console.log(movements);
-// console.log(movementsUsd);
-
 const movementsDes = movements.map((mov, i) => {
   if (mov > 0) {
     return `You deposited ${i + 1}: ${mov}`;
@@ -169,7 +165,6 @@ const movementsDes = movements.map((mov, i) => {
 
 const deposits = movements.filter(mov => mov > 0);
 const withdrawals = movements.filter(mov => mov < 0);
-
 const balance = movements.reduce((acc, cur) => acc + cur, 0);
 
 // const dogs = {
