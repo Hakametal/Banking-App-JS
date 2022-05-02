@@ -61,12 +61,43 @@ const accounts = [account1, account2, account3, account4];
 const eurToUsd = 1.1;
 let currentAccount;
 
+btnClose.addEventListener("click", e => {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    accounts.splice(index, 1);
+    containerApp.style.opacity = 0;
+  }
+
+  inputCloseUsername.value = inputClosePin.value = "";
+});
+
 btnTransfer.addEventListener("click", e => {
   e.preventDefault();
   const amount = Number(inputTransferAmount.value);
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
+  inputTransferAmount.value = inputTransferTo.value = "";
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    // This is the transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+  }
+
+  updateUI(currentAccount);
 });
 
 //
@@ -84,11 +115,9 @@ btnLogin.addEventListener("click", input => {
     containerApp.style.opacity = 100;
     inputLoginUsername.value = inputLoginPin.value = "";
     inputLoginPin.blur();
-
-    displayMovements(currentAccount.movements);
-    displayBalance(currentAccount.movements);
-    calcDisplaySummary(currentAccount);
   }
+
+  updateUI(currentAccount);
 });
 
 const displayMovements = function (movements) {
@@ -105,12 +134,11 @@ const displayMovements = function (movements) {
   });
 };
 
-const displayBalance = function (movements) {
-  const balance = movements.reduce((acc, cur) => acc + cur, 0);
-
-  labelBalance.textContent = `€ ${balance}`;
+const displayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, cur) => acc + cur, 0);
+  labelBalance.textContent = `€ ${acc.balance}`;
 };
-displayBalance(account1.movements);
+displayBalance(account1);
 
 const createUsername = accs => {
   accs.forEach(acc => {
@@ -142,6 +170,12 @@ const calcDisplaySummary = acc => {
     })
     .reduce((acc, mov) => acc + mov, 0);
   labelSumInterest.textContent = `€${Math.abs(interest)}`;
+};
+
+const updateUI = function (acc) {
+  displayMovements(acc.movements);
+  displayBalance(acc);
+  calcDisplaySummary(acc);
 };
 
 const currencies = new Map([
