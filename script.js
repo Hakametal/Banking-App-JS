@@ -78,6 +78,18 @@ btnClose.addEventListener("click", e => {
   inputCloseUsername.value = inputClosePin.value = "";
 });
 
+btnLoan.addEventListener("click", e => {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    //Add movement
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = "";
+});
+
 btnTransfer.addEventListener("click", e => {
   e.preventDefault();
   const amount = Number(inputTransferAmount.value);
@@ -290,3 +302,10 @@ const balance = movements.reduce((acc, cur) => acc + cur, 0);
 //     console.log(`You withdrew ${Math.abs(movement)}`);
 //   }
 // });
+
+//Equality
+console.log(movements.includes(-130));
+
+// Condition
+const anyDeposits = movements.some(mov => mov > 1500);
+console.log(anyDeposits);
