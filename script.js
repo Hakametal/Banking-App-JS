@@ -132,9 +132,19 @@ btnLogin.addEventListener("click", input => {
   updateUI(currentAccount);
 });
 
-const displayMovements = function (movements) {
+let sorted = false;
+btnSort.addEventListener("click", e => {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+});
+
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = "";
-  movements.forEach(function (mov, i) {
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? "deposit" : "withdrawal";
     const html = `<div class="movements__row">
     <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
@@ -306,6 +316,32 @@ const balance = movements.reduce((acc, cur) => acc + cur, 0);
 //Equality
 console.log(movements.includes(-130));
 
-// Condition
+// SOME: Condition
 const anyDeposits = movements.some(mov => mov > 1500);
 console.log(anyDeposits);
+
+//Every
+console.log(account4.movements.every(mov => mov > 0)); //This is the account with no withdrawals.
+
+//Seperate callback
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+
+const allMovements = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(allMovements);
+
+const someMovements = accounts.flatMap(e => e.movements);
+console.log(someMovements);
+
+//You have to perform this callback function on numbers because sort() reads numbers as strings.
+movements.sort((a, b) => {
+  if (a > b) return 1;
+  if (b > a) return -1;
+});
+
+console.log(movements);
