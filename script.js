@@ -330,9 +330,9 @@ console.log(movements.every(deposit));
 console.log(movements.filter(deposit));
 
 const allMovements = accounts
-  .map(acc => acc.movements)
-  .flat()
+  .flatMap(acc => acc.movements)
   .reduce((acc, mov) => acc + mov, 0);
+
 console.log(allMovements);
 
 const someMovements = accounts.flatMap(e => e.movements);
