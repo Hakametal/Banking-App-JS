@@ -345,3 +345,26 @@ movements.sort((a, b) => {
 });
 
 console.log(movements);
+
+const bankDepositSum = accounts
+  .flatMap(e => e.movements)
+  .filter(mov => mov > 0)
+  .reduce((acc, mov) => acc + mov, 0);
+
+const depositsOver1000 = accounts
+  .flatMap(mov => mov.movements)
+  .filter(dep => dep >= 1000);
+
+const sums = accounts
+  .flatMap(e => e.movements)
+  .reduce(
+    (acc, mov) => {
+      mov > 0 ? (acc.deposits += mov) : (acc.withdrawals += mov);
+      return acc;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(sums);
+console.log(depositsOver1000);
+console.log(bankDepositSum);
